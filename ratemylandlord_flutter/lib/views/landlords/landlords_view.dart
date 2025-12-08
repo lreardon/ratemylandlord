@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ratemylandlord_client/ratemylandlord_client.dart';
 import 'package:ratemylandlord_flutter/model_extensions/landlord_extension.dart';
-import 'package:ratemylandlord_flutter/providers/landlords_provider.dart';
 
 class LandlordsView extends ConsumerWidget {
   final List<Landlord> landlords;
