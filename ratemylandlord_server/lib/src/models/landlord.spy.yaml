@@ -1,0 +1,7 @@
+class: Landlord
+table: landlords
+
+fields:
+  id: UuidValue, defaultModel=random
+  firstName: String
+  lastName: String
