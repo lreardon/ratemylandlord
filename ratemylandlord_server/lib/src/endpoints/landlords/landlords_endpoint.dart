@@ -7,7 +7,10 @@ class LandlordsEndpoint extends Endpoint {
   }
 
   Future<void> deleteAll(Session session) async {
-    await Landlord.db.deleteWhere(session, where: (l) => Constant.bool(true));
+    await Landlord.db.deleteWhere(
+      session,
+      where: (l) => Constant.bool(true),
+    );
   }
 
   Future<List<Landlord>> find(
@@ -15,9 +18,12 @@ class LandlordsEndpoint extends Endpoint {
     required String firstName,
     required String lastName,
   }) async {
-    return Landlord.db.find(session, where: (l) {
-      return l.firstName.equals(firstName) & l.lastName.equals(lastName);
-    });
+    return Landlord.db.find(
+      session,
+      where: (l) {
+        return l.firstName.equals(firstName) & l.lastName.equals(lastName);
+      },
+    );
   }
 
   Future<Landlord> create(
@@ -30,6 +36,7 @@ class LandlordsEndpoint extends Endpoint {
       Landlord(
         firstName: firstName,
         lastName: lastName,
+        addedByUserId: UuidValue.fromString('00000000-0000-0000-0000-000000000000'),
       ),
     );
 

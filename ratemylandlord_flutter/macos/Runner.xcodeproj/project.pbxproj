@@ -28,6 +28,7 @@
 		33CC10F62044A3C60003C045 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33CC10F42044A3C60003C045 /* MainMenu.xib */; };
 		33CC11132044BFA00003C045 /* MainFlutterWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CC11122044BFA00003C045 /* MainFlutterWindow.swift */; };
 		A76112F752A20E47AA325C8D /* Pods_RunnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A21EDD17E8A2EBE641D471 /* Pods_RunnerTests.framework */; };
+		D2A8E7C12EEFC3A000B55CDB /* GoogleService-Info 2.plist in Resources */ = {isa = PBXBuildFile; fileRef = D2A8E7C02EEFC3A000B55CDB /* GoogleService-Info 2.plist */; };
 		DB84052E2EAC3FC4E1F48E30 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F7609D6C59947A77F110CC /* Pods_Runner.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,7 @@
 		B0A21EDD17E8A2EBE641D471 /* Pods_RunnerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RunnerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B15A77AA39BD45261B23ED52 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		B2F7609D6C59947A77F110CC /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2A8E7C02EEFC3A000B55CDB /* GoogleService-Info 2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info 2.plist"; sourceTree = "<group>"; };
 		E130745457F12CA30E695BAA /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -138,6 +140,7 @@
 				33CC10EE2044A3C60003C045 /* Products */,
 				D73912EC22F37F3D000D13A0 /* Frameworks */,
 				AE4BAD4CDB5F363706F62809 /* Pods */,
+				D2A8E7C02EEFC3A000B55CDB /* GoogleService-Info 2.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -195,7 +198,6 @@
 				754591C117184BEF3384485B /* Pods-RunnerTests.release.xcconfig */,
 				50A96AE986BE4B7EDA9913E3 /* Pods-RunnerTests.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -241,6 +243,7 @@
 				33CC110E2044A8840003C045 /* Bundle Framework */,
 				3399D490228B24CF009A79C7 /* ShellScript */,
 				DD94153C67A010ED0BBE0557 /* [CP] Embed Pods Frameworks */,
+				B05BD3DC381EEDDA88977042 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -317,6 +320,7 @@
 			files = (
 				33CC10F32044A3C60003C045 /* Assets.xcassets in Resources */,
 				33CC10F62044A3C60003C045 /* MainMenu.xib in Resources */,
+				D2A8E7C12EEFC3A000B55CDB /* GoogleService-Info 2.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,6 +385,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B05BD3DC381EEDDA88977042 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C2D942566CEFF3BD1D592559 /* [CP] Check Pods Manifest.lock */ = {

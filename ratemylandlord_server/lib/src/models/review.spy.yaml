@@ -1,0 +1,9 @@
+class: Review
+table: reviews
+
+fields:
+  id: UuidValue, defaultModel=random
+  landlordId: UuidValue
+  tenantId: UuidValue
+  rating: int
+  comment: String

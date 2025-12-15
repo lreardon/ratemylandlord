@@ -12,29 +12,27 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class Landlord implements _i1.SerializableModel {
-  Landlord._({
+abstract class Tenant implements _i1.SerializableModel {
+  Tenant._({
     _i1.UuidValue? id,
     required this.firstName,
     required this.lastName,
-    required this.addedByUserId,
+    required this.email,
   }) : id = id ?? _i1.Uuid().v4obj();
 
-  factory Landlord({
+  factory Tenant({
     _i1.UuidValue? id,
     required String firstName,
     required String lastName,
-    required _i1.UuidValue addedByUserId,
-  }) = _LandlordImpl;
+    required String email,
+  }) = _TenantImpl;
 
-  factory Landlord.fromJson(Map<String, dynamic> jsonSerialization) {
-    return Landlord(
+  factory Tenant.fromJson(Map<String, dynamic> jsonSerialization) {
+    return Tenant(
       id: _i1.UuidValueJsonExtension.fromJson(jsonSerialization['id']),
       firstName: jsonSerialization['firstName'] as String,
       lastName: jsonSerialization['lastName'] as String,
-      addedByUserId: _i1.UuidValueJsonExtension.fromJson(
-        jsonSerialization['addedByUserId'],
-      ),
+      email: jsonSerialization['email'] as String,
     );
   }
 
@@ -45,25 +43,25 @@ abstract class Landlord implements _i1.SerializableModel {
 
   String lastName;
 
-  _i1.UuidValue addedByUserId;
+  String email;
 
-  /// Returns a shallow copy of this [Landlord]
+  /// Returns a shallow copy of this [Tenant]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
-  Landlord copyWith({
+  Tenant copyWith({
     _i1.UuidValue? id,
     String? firstName,
     String? lastName,
-    _i1.UuidValue? addedByUserId,
+    String? email,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
-      '__className__': 'Landlord',
+      '__className__': 'Tenant',
       'id': id.toJson(),
       'firstName': firstName,
       'lastName': lastName,
-      'addedByUserId': addedByUserId.toJson(),
+      'email': email,
     };
   }
 
@@ -73,34 +71,34 @@ abstract class Landlord implements _i1.SerializableModel {
   }
 }
 
-class _LandlordImpl extends Landlord {
-  _LandlordImpl({
+class _TenantImpl extends Tenant {
+  _TenantImpl({
     _i1.UuidValue? id,
     required String firstName,
     required String lastName,
-    required _i1.UuidValue addedByUserId,
+    required String email,
   }) : super._(
          id: id,
          firstName: firstName,
          lastName: lastName,
-         addedByUserId: addedByUserId,
+         email: email,
        );
 
-  /// Returns a shallow copy of this [Landlord]
+  /// Returns a shallow copy of this [Tenant]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   @override
-  Landlord copyWith({
+  Tenant copyWith({
     _i1.UuidValue? id,
     String? firstName,
     String? lastName,
-    _i1.UuidValue? addedByUserId,
+    String? email,
   }) {
-    return Landlord(
+    return Tenant(
       id: id ?? this.id,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
-      addedByUserId: addedByUserId ?? this.addedByUserId,
+      email: email ?? this.email,
     );
   }
 }

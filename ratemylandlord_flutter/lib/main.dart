@@ -4,6 +4,8 @@ import 'package:ratemylandlord_client/ratemylandlord_client.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ratemylandlord_flutter/router.dart';
+import 'package:ratemylandlord_flutter/src/serverpod_client.dart';
+import 'package:serverpod_auth_google_flutter/serverpod_auth_google_flutter.dart';
 
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,24 +17,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// production servers.
 /// In a larger app, you may want to use the dependency injection of your choice
 /// instead of using a global client object. This is just a simple example.
-late final Client client;
+void main() async {
+  // Ensure Flutter is initialized
+  WidgetsFlutterBinding.ensureInitialized();
 
-late String serverUrl;
-
-void main() {
-  // When you are running the app on a physical device, you need to set the
-  // server URL to the IP address of your computer. You can find the IP
-  // address by running `ipconfig` on Windows or `ifconfig` on Mac/Linux.
-  // You can set the variable when running or building your app like this:
-  // E.g. `flutter run --dart-define=SERVER_URL=https://api.example.com/`
-  const serverUrlFromEnv = String.fromEnvironment('SERVER_URL');
-  final serverUrl = serverUrlFromEnv.isEmpty ? 'http://$localhost:8080/' : serverUrlFromEnv;
-
-  client = Client(serverUrl)..connectivityMonitor = FlutterConnectivityMonitor();
+  await initializeServerpodClient();
 
   runApp(
     Device(
-      isMobile: [TargetPlatform.iOS, TargetPlatform.android].contains(defaultTargetPlatform) && !kIsWeb,
+      isMobile:
+          [
+            TargetPlatform.iOS,
+            TargetPlatform.android,
+          ].contains(
+            defaultTargetPlatform,
+          ) &&
+          !kIsWeb,
       child: const MyApp(),
     ),
   );

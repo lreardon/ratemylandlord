@@ -5,8 +5,8 @@ import 'package:app_components/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ratemylandlord_client/ratemylandlord_client.dart';
-import 'package:ratemylandlord_flutter/main.dart';
 import 'package:app_components/widgets/buttons/app_button.dart';
+import 'package:ratemylandlord_flutter/src/serverpod_client.dart';
 import 'package:ratemylandlord_flutter/views/landlords/landlord_card.dart';
 
 class MyHomePage extends ConsumerStatefulWidget {
@@ -112,6 +112,12 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
                     },
                     child: const Text('All'),
                   ),
+                  AppButton(
+                    child: Text('Log Out'),
+                    onPressed: () async {
+                      await sessionManager.signOutDevice();
+                    },
+                  ),
                 ],
               ),
               Expanded(
@@ -125,8 +131,8 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
                             child: Text(
                               searchTextPresent ? 'No landlords found.' : 'Search for landlords.',
                               style: Theme.of(context).textTheme.bodyLarge?.withColor(
-                                    Theme.of(context).colorScheme.onSurfaceVariant,
-                                  ),
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                              ),
                             ),
                           ),
                           if (searchTextPresent) ...[

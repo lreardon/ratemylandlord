@@ -1,7 +1,9 @@
-import 'package:ratemylandlord_server/src/birthday_reminder.dart';
+import 'dart:io';
+
 import 'package:serverpod/serverpod.dart';
 
 import 'package:ratemylandlord_server/src/web/routes/root.dart';
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as auth;
 
 import 'src/generated/protocol.dart';
 import 'src/generated/endpoints.dart';
@@ -12,16 +14,46 @@ import 'src/generated/endpoints.dart';
 
 void run(List<String> args) async {
   // Initialize Serverpod and connect it with your generated code.
-  final pod = Serverpod(args, Protocol(), Endpoints());
+  final pod = Serverpod(
+    args,
+    Protocol(),
+    Endpoints(),
+    authenticationHandler: auth.authenticationHandler,
+  );
+
+  // Configure authentication
+  auth.AuthConfig.set(
+    auth.AuthConfig(
+      sendValidationEmail: (session, email, validationCode) async {
+        // TODO: Implement email sending in production
+        // For development, just print the validation code
+        print('Validation code for $email: $validationCode');
+        return true;
+      },
+      sendPasswordResetEmail: (session, userInfo, validationCode) async {
+        // TODO: Implement password reset email in production
+        print('Password reset code for ${userInfo.email}: $validationCode');
+        return true;
+      },
+      // Configure Google Sign-In
+      extraSaltyHash: true,
+    ),
+  );
+
+  // Configure Google OAuth
+  auth.GoogleAuthConfig.set(
+    auth.GoogleAuthConfig(
+      clientId: '306124830006-4c15iu3n5j941hi334jffp6u48mr6ddg.apps.googleusercontent.com',
+      clientSecret: pod.getPassword('googleClientSecret') ?? '',
+    ),
+  );
 
   // Setup a default page at the web root.
   pod.webServer.addRoute(RouteRoot(), '/');
   pod.webServer.addRoute(RouteRoot(), '/index.html');
   // Serve all files in the /static directory.
-  pod.webServer.addRoute(
-    RouteStaticDirectory(serverDirectory: 'static', basePath: '/'),
-    '/*',
-  );
+  pod.webServer.addRoute(StaticRoute.directory(Directory('web/static')), '/static/**');
+  pod.webServer.addRoute(auth.RouteGoogleSignIn(), '/googlesignin');
 
   // Start the server.
   await pod.start();
@@ -33,24 +65,13 @@ void run(List<String> args) async {
   // the background. Their schedule is persisted to the database, so you will
   // not lose them if the server is restarted.
 
-  pod.registerFutureCall(
-    BirthdayReminder(),
-    FutureCallNames.birthdayReminder.name,
-  );
+  // pod.registerFutureCall(BirthdayReminder(), FutureCallNames.birthdayReminder.name);
 
   // You can schedule future calls for a later time during startup. But you can
   // also schedule them in any endpoint or webroute through the session object.
   // there is also [futureCallAtTime] if you want to schedule a future call at a
   // specific time.
-  await pod.futureCallWithDelay(
-    FutureCallNames.birthdayReminder.name,
-    Greeting(
-      message: 'Hello!',
-      author: 'Serverpod Server',
-      timestamp: DateTime.now(),
-    ),
-    Duration(seconds: 5),
-  );
+  // await pod.futureCallWithDelay(FutureCallNames.birthdayReminder.name, Greeting(message: 'Hello!', author: 'Serverpod Server', timestamp: DateTime.now()), Duration(seconds: 5));
 }
 
 /// Names of all future calls in the server.

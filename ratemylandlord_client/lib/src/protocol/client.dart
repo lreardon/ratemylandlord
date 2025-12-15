@@ -7,12 +7,13 @@
 // ignore_for_file: public_member_api_docs
 // ignore_for_file: type_literal_in_constant_pattern
 // ignore_for_file: use_super_parameters
+// ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
 import 'package:ratemylandlord_client/src/protocol/landlord.dart' as _i3;
-import 'package:ratemylandlord_client/src/protocol/greeting.dart' as _i4;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i4;
 import 'protocol.dart' as _i5;
 
 /// {@category Endpoint}
@@ -30,96 +31,88 @@ class EndpointLandlords extends _i1.EndpointRef {
       );
 
   _i2.Future<void> deleteAll() => caller.callServerEndpoint<void>(
-        'landlords',
-        'deleteAll',
-        {},
-      );
+    'landlords',
+    'deleteAll',
+    {},
+  );
 
   _i2.Future<List<_i3.Landlord>> find({
     required String firstName,
     required String lastName,
-  }) =>
-      caller.callServerEndpoint<List<_i3.Landlord>>(
-        'landlords',
-        'find',
-        {
-          'firstName': firstName,
-          'lastName': lastName,
-        },
-      );
+  }) => caller.callServerEndpoint<List<_i3.Landlord>>(
+    'landlords',
+    'find',
+    {
+      'firstName': firstName,
+      'lastName': lastName,
+    },
+  );
 
   _i2.Future<_i3.Landlord> create({
     required String firstName,
     required String lastName,
-  }) =>
-      caller.callServerEndpoint<_i3.Landlord>(
-        'landlords',
-        'create',
-        {
-          'firstName': firstName,
-          'lastName': lastName,
-        },
-      );
+  }) => caller.callServerEndpoint<_i3.Landlord>(
+    'landlords',
+    'create',
+    {
+      'firstName': firstName,
+      'lastName': lastName,
+    },
+  );
 }
 
-/// This is an example endpoint that returns a greeting message through
-/// its [hello] method.
-/// {@category Endpoint}
-class EndpointGreeting extends _i1.EndpointRef {
-  EndpointGreeting(_i1.EndpointCaller caller) : super(caller);
+class Modules {
+  Modules(Client client) {
+    auth = _i4.Caller(client);
+  }
 
-  @override
-  String get name => 'greeting';
-
-  /// Returns a personalized greeting message: "Hello {name}".
-  _i2.Future<_i4.Greeting> hello(String name) =>
-      caller.callServerEndpoint<_i4.Greeting>(
-        'greeting',
-        'hello',
-        {'name': name},
-      );
+  late final _i4.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
   Client(
     String host, {
     dynamic securityContext,
-    _i1.AuthenticationKeyManager? authenticationKeyManager,
+    @Deprecated(
+      'Use authKeyProvider instead. This will be removed in future releases.',
+    )
+    super.authenticationKeyManager,
     Duration? streamingConnectionTimeout,
     Duration? connectionTimeout,
     Function(
       _i1.MethodCallContext,
       Object,
       StackTrace,
-    )? onFailedCall,
+    )?
+    onFailedCall,
     Function(_i1.MethodCallContext)? onSucceededCall,
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
-          host,
-          _i5.Protocol(),
-          securityContext: securityContext,
-          authenticationKeyManager: authenticationKeyManager,
-          streamingConnectionTimeout: streamingConnectionTimeout,
-          connectionTimeout: connectionTimeout,
-          onFailedCall: onFailedCall,
-          onSucceededCall: onSucceededCall,
-          disconnectStreamsOnLostInternetConnection:
-              disconnectStreamsOnLostInternetConnection,
-        ) {
+         host,
+         _i5.Protocol(),
+         securityContext: securityContext,
+         streamingConnectionTimeout: streamingConnectionTimeout,
+         connectionTimeout: connectionTimeout,
+         onFailedCall: onFailedCall,
+         onSucceededCall: onSucceededCall,
+         disconnectStreamsOnLostInternetConnection:
+             disconnectStreamsOnLostInternetConnection,
+       ) {
     landlords = EndpointLandlords(this);
-    greeting = EndpointGreeting(this);
+    modules = Modules(this);
   }
 
   late final EndpointLandlords landlords;
 
-  late final EndpointGreeting greeting;
+  late final Modules modules;
 
   @override
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
-        'landlords': landlords,
-        'greeting': greeting,
-      };
+    'landlords': landlords,
+  };
 
   @override
-  Map<String, _i1.ModuleEndpointCaller> get moduleLookup => {};
+  Map<String, _i1.ModuleEndpointCaller> get moduleLookup => {
+    'auth': modules.auth,
+  };
 }

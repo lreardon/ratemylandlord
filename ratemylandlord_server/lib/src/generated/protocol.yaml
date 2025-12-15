@@ -3,5 +3,3 @@ landlords:
   - deleteAll:
   - find:
   - create:
-greeting:
-  - hello:

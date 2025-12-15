@@ -1,8 +1,8 @@
-class: Landlord
-table: landlords
+class: Tenant
+table: tenants
 
 fields:
   id: UuidValue, defaultModel=random
   firstName: String
   lastName: String
-  addedByUserId: UuidValue
+  email: String

@@ -7,11 +7,12 @@
 // ignore_for_file: public_member_api_docs
 // ignore_for_file: type_literal_in_constant_pattern
 // ignore_for_file: use_super_parameters
+// ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../endpoints/landlords/landlords_endpoint.dart' as _i2;
-import '../greeting_endpoint.dart' as _i3;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i3;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -23,12 +24,6 @@ class Endpoints extends _i1.EndpointDispatch {
           'landlords',
           null,
         ),
-      'greeting': _i3.GreetingEndpoint()
-        ..initialize(
-          server,
-          'greeting',
-          null,
-        ),
     };
     connectors['landlords'] = _i1.EndpointConnector(
       name: 'landlords',
@@ -37,20 +32,22 @@ class Endpoints extends _i1.EndpointDispatch {
         'list': _i1.MethodConnector(
           name: 'list',
           params: {},
-          call: (
-            _i1.Session session,
-            Map<String, dynamic> params,
-          ) async =>
-              (endpoints['landlords'] as _i2.LandlordsEndpoint).list(session),
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['landlords'] as _i2.LandlordsEndpoint).list(
+                session,
+              ),
         ),
         'deleteAll': _i1.MethodConnector(
           name: 'deleteAll',
           params: {},
-          call: (
-            _i1.Session session,
-            Map<String, dynamic> params,
-          ) async =>
-              (endpoints['landlords'] as _i2.LandlordsEndpoint)
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['landlords'] as _i2.LandlordsEndpoint)
                   .deleteAll(session),
         ),
         'find': _i1.MethodConnector(
@@ -67,15 +64,15 @@ class Endpoints extends _i1.EndpointDispatch {
               nullable: false,
             ),
           },
-          call: (
-            _i1.Session session,
-            Map<String, dynamic> params,
-          ) async =>
-              (endpoints['landlords'] as _i2.LandlordsEndpoint).find(
-            session,
-            firstName: params['firstName'],
-            lastName: params['lastName'],
-          ),
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['landlords'] as _i2.LandlordsEndpoint).find(
+                session,
+                firstName: params['firstName'],
+                lastName: params['lastName'],
+              ),
         ),
         'create': _i1.MethodConnector(
           name: 'create',
@@ -91,41 +88,19 @@ class Endpoints extends _i1.EndpointDispatch {
               nullable: false,
             ),
           },
-          call: (
-            _i1.Session session,
-            Map<String, dynamic> params,
-          ) async =>
-              (endpoints['landlords'] as _i2.LandlordsEndpoint).create(
-            session,
-            firstName: params['firstName'],
-            lastName: params['lastName'],
-          ),
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['landlords'] as _i2.LandlordsEndpoint).create(
+                    session,
+                    firstName: params['firstName'],
+                    lastName: params['lastName'],
+                  ),
         ),
       },
     );
-    connectors['greeting'] = _i1.EndpointConnector(
-      name: 'greeting',
-      endpoint: endpoints['greeting']!,
-      methodConnectors: {
-        'hello': _i1.MethodConnector(
-          name: 'hello',
-          params: {
-            'name': _i1.ParameterDescription(
-              name: 'name',
-              type: _i1.getType<String>(),
-              nullable: false,
-            )
-          },
-          call: (
-            _i1.Session session,
-            Map<String, dynamic> params,
-          ) async =>
-              (endpoints['greeting'] as _i3.GreetingEndpoint).hello(
-            session,
-            params['name'],
-          ),
-        )
-      },
-    );
+    modules['serverpod_auth'] = _i3.Endpoints()..initializeEndpoints(server);
   }
 }
