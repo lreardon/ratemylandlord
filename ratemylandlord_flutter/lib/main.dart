@@ -1,13 +1,9 @@
 import 'package:app_components/observers/device.dart';
 import 'package:flutter/foundation.dart';
-import 'package:ratemylandlord_client/ratemylandlord_client.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ratemylandlord_flutter/router.dart';
 import 'package:ratemylandlord_flutter/src/serverpod_client.dart';
-import 'package:serverpod_auth_google_flutter/serverpod_auth_google_flutter.dart';
-
-import 'package:serverpod_flutter/serverpod_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Sets up a global client object that can be used to talk to the server from
