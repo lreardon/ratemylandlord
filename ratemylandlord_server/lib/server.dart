@@ -35,16 +35,6 @@ void run(List<String> args) async {
         print('Password reset code for ${userInfo.email}: $validationCode');
         return true;
       },
-      // Configure Google Sign-In
-      extraSaltyHash: true,
-    ),
-  );
-
-  // Configure Google OAuth
-  auth.GoogleAuthConfig.set(
-    auth.GoogleAuthConfig(
-      clientId: '306124830006-4c15iu3n5j941hi334jffp6u48mr6ddg.apps.googleusercontent.com',
-      clientSecret: pod.getPassword('googleClientSecret') ?? '',
     ),
   );
 
