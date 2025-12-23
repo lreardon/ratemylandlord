@@ -33,11 +33,11 @@ dependencies:
   ratemylandlord_client:
     path: ../ratemylandlord_client
   riverpod_annotation: ^3.0.3
-  serverpod_flutter: 3.0.1
+  serverpod_flutter: ^3.0.1
   faker: ^2.2.0
   json_annotation: ^4.9.0
   serverpod_auth_shared_flutter: ^3.0.1
-  serverpod_auth_client: 3.0.1
+  serverpod_auth_client: ^3.0.1
   serverpod_auth_email_flutter: ^3.0.1
   serverpod_auth_google_flutter: ^3.0.1
 

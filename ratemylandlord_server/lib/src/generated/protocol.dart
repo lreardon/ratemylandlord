@@ -14,10 +14,12 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import 'package:serverpod/protocol.dart' as _i2;
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i3;
 import 'landlord.dart' as _i4;
-import 'review.dart' as _i5;
-import 'tenant.dart' as _i6;
-import 'package:ratemylandlord_server/src/generated/landlord.dart' as _i7;
+import 'property.dart' as _i5;
+import 'review.dart' as _i6;
+import 'tenant.dart' as _i7;
+import 'package:ratemylandlord_server/src/generated/landlord.dart' as _i8;
 export 'landlord.dart';
+export 'property.dart';
 export 'review.dart';
 export 'tenant.dart';
 
@@ -65,6 +67,44 @@ class Protocol extends _i1.SerializationManagerServer {
       indexes: [
         _i2.IndexDefinition(
           indexName: 'landlords_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
+      name: 'properties',
+      dartName: 'Property',
+      schema: 'public',
+      module: 'ratemylandlord',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.uuid,
+          isNullable: false,
+          dartType: 'UuidValue',
+          columnDefault: 'gen_random_uuid()',
+        ),
+        _i2.ColumnDefinition(
+          name: 'apn',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+      ],
+      foreignKeys: [],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'properties_pkey',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -219,23 +259,29 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i4.Landlord) {
       return _i4.Landlord.fromJson(data) as T;
     }
-    if (t == _i5.Review) {
-      return _i5.Review.fromJson(data) as T;
+    if (t == _i5.Property) {
+      return _i5.Property.fromJson(data) as T;
     }
-    if (t == _i6.Tenant) {
-      return _i6.Tenant.fromJson(data) as T;
+    if (t == _i6.Review) {
+      return _i6.Review.fromJson(data) as T;
+    }
+    if (t == _i7.Tenant) {
+      return _i7.Tenant.fromJson(data) as T;
     }
     if (t == _i1.getType<_i4.Landlord?>()) {
       return (data != null ? _i4.Landlord.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i5.Review?>()) {
-      return (data != null ? _i5.Review.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i5.Property?>()) {
+      return (data != null ? _i5.Property.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i6.Tenant?>()) {
-      return (data != null ? _i6.Tenant.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i6.Review?>()) {
+      return (data != null ? _i6.Review.fromJson(data) : null) as T;
     }
-    if (t == List<_i7.Landlord>) {
-      return (data as List).map((e) => deserialize<_i7.Landlord>(e)).toList()
+    if (t == _i1.getType<_i7.Tenant?>()) {
+      return (data != null ? _i7.Tenant.fromJson(data) : null) as T;
+    }
+    if (t == List<_i8.Landlord>) {
+      return (data as List).map((e) => deserialize<_i8.Landlord>(e)).toList()
           as T;
     }
     try {
@@ -250,8 +296,9 @@ class Protocol extends _i1.SerializationManagerServer {
   static String? getClassNameForType(Type type) {
     return switch (type) {
       _i4.Landlord => 'Landlord',
-      _i5.Review => 'Review',
-      _i6.Tenant => 'Tenant',
+      _i5.Property => 'Property',
+      _i6.Review => 'Review',
+      _i7.Tenant => 'Tenant',
       _ => null,
     };
   }
@@ -271,9 +318,11 @@ class Protocol extends _i1.SerializationManagerServer {
     switch (data) {
       case _i4.Landlord():
         return 'Landlord';
-      case _i5.Review():
+      case _i5.Property():
+        return 'Property';
+      case _i6.Review():
         return 'Review';
-      case _i6.Tenant():
+      case _i7.Tenant():
         return 'Tenant';
     }
     className = _i2.Protocol().getClassNameForObject(data);
@@ -296,11 +345,14 @@ class Protocol extends _i1.SerializationManagerServer {
     if (dataClassName == 'Landlord') {
       return deserialize<_i4.Landlord>(data['data']);
     }
+    if (dataClassName == 'Property') {
+      return deserialize<_i5.Property>(data['data']);
+    }
     if (dataClassName == 'Review') {
-      return deserialize<_i5.Review>(data['data']);
+      return deserialize<_i6.Review>(data['data']);
     }
     if (dataClassName == 'Tenant') {
-      return deserialize<_i6.Tenant>(data['data']);
+      return deserialize<_i7.Tenant>(data['data']);
     }
     if (dataClassName.startsWith('serverpod.')) {
       data['className'] = dataClassName.substring(10);
@@ -330,10 +382,12 @@ class Protocol extends _i1.SerializationManagerServer {
     switch (t) {
       case _i4.Landlord:
         return _i4.Landlord.t;
-      case _i5.Review:
-        return _i5.Review.t;
-      case _i6.Tenant:
-        return _i6.Tenant.t;
+      case _i5.Property:
+        return _i5.Property.t;
+      case _i6.Review:
+        return _i6.Review.t;
+      case _i7.Tenant:
+        return _i7.Tenant.t;
     }
     return null;
   }

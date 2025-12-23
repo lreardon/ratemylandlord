@@ -1,0 +1,6 @@
+class: Property
+table: properties
+
+fields:
+  id: UuidValue, defaultModel=random
+  apn: String

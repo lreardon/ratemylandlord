@@ -12,11 +12,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'landlord.dart' as _i2;
-import 'review.dart' as _i3;
-import 'tenant.dart' as _i4;
-import 'package:ratemylandlord_client/src/protocol/landlord.dart' as _i5;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i6;
+import 'property.dart' as _i3;
+import 'review.dart' as _i4;
+import 'tenant.dart' as _i5;
+import 'package:ratemylandlord_client/src/protocol/landlord.dart' as _i6;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i7;
 export 'landlord.dart';
+export 'property.dart';
 export 'review.dart';
 export 'tenant.dart';
 export 'client.dart';
@@ -58,27 +60,33 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i2.Landlord) {
       return _i2.Landlord.fromJson(data) as T;
     }
-    if (t == _i3.Review) {
-      return _i3.Review.fromJson(data) as T;
+    if (t == _i3.Property) {
+      return _i3.Property.fromJson(data) as T;
     }
-    if (t == _i4.Tenant) {
-      return _i4.Tenant.fromJson(data) as T;
+    if (t == _i4.Review) {
+      return _i4.Review.fromJson(data) as T;
+    }
+    if (t == _i5.Tenant) {
+      return _i5.Tenant.fromJson(data) as T;
     }
     if (t == _i1.getType<_i2.Landlord?>()) {
       return (data != null ? _i2.Landlord.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i3.Review?>()) {
-      return (data != null ? _i3.Review.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i3.Property?>()) {
+      return (data != null ? _i3.Property.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i4.Tenant?>()) {
-      return (data != null ? _i4.Tenant.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i4.Review?>()) {
+      return (data != null ? _i4.Review.fromJson(data) : null) as T;
     }
-    if (t == List<_i5.Landlord>) {
-      return (data as List).map((e) => deserialize<_i5.Landlord>(e)).toList()
+    if (t == _i1.getType<_i5.Tenant?>()) {
+      return (data != null ? _i5.Tenant.fromJson(data) : null) as T;
+    }
+    if (t == List<_i6.Landlord>) {
+      return (data as List).map((e) => deserialize<_i6.Landlord>(e)).toList()
           as T;
     }
     try {
-      return _i6.Protocol().deserialize<T>(data, t);
+      return _i7.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -86,8 +94,9 @@ class Protocol extends _i1.SerializationManager {
   static String? getClassNameForType(Type type) {
     return switch (type) {
       _i2.Landlord => 'Landlord',
-      _i3.Review => 'Review',
-      _i4.Tenant => 'Tenant',
+      _i3.Property => 'Property',
+      _i4.Review => 'Review',
+      _i5.Tenant => 'Tenant',
       _ => null,
     };
   }
@@ -107,12 +116,14 @@ class Protocol extends _i1.SerializationManager {
     switch (data) {
       case _i2.Landlord():
         return 'Landlord';
-      case _i3.Review():
+      case _i3.Property():
+        return 'Property';
+      case _i4.Review():
         return 'Review';
-      case _i4.Tenant():
+      case _i5.Tenant():
         return 'Tenant';
     }
-    className = _i6.Protocol().getClassNameForObject(data);
+    className = _i7.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -128,15 +139,18 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'Landlord') {
       return deserialize<_i2.Landlord>(data['data']);
     }
+    if (dataClassName == 'Property') {
+      return deserialize<_i3.Property>(data['data']);
+    }
     if (dataClassName == 'Review') {
-      return deserialize<_i3.Review>(data['data']);
+      return deserialize<_i4.Review>(data['data']);
     }
     if (dataClassName == 'Tenant') {
-      return deserialize<_i4.Tenant>(data['data']);
+      return deserialize<_i5.Tenant>(data['data']);
     }
     if (dataClassName.startsWith('serverpod_auth.')) {
       data['className'] = dataClassName.substring(15);
-      return _i6.Protocol().deserializeByClassName(data);
+      return _i7.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }

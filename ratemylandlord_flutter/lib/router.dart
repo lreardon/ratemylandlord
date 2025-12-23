@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ratemylandlord_flutter/src/serverpod_client.dart';
 import 'package:ratemylandlord_flutter/views/auth/auth_screen.dart';
-import 'package:ratemylandlord_flutter/views/auth/auth_screen.dart';
 import 'package:ratemylandlord_flutter/views/my_home_page.dart';
 import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart';
 
